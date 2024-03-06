@@ -9,8 +9,9 @@ const day = document.querySelector("[data-days]")
 const hour = document.querySelector("[data-hours]")
 const minute = document.querySelector("[data-minutes]")
 const sec = document.querySelector("[data-seconds]")
-btn.setAttribute("disabled", "")
-
+btn.disabled = true;
+let userSelectedDate;
+let intervalNumb;
 
 const options = {
     enableTime: true,
@@ -22,27 +23,20 @@ const options = {
       {return iziToast.warning({
         message: 'Please choose a date in the future', position: "center", close: false, closeOnClick: true, progressBar: false, messageSize: 30, timeout: false
     }),
-    btn.setAttribute("disabled", "")
+    btn.disabled = true
     }else{
-     btn.removeAttribute("disabled")
+     btn.disabled = false
     }
+    userSelectedDate = selectedDates[0].getTime()
     },
   };
 
-  let intervalNumb;
-  let begin = false
-
-  const calendar = flatpickr(inputFild, options);
+  flatpickr(inputFild, options);
   btn.addEventListener("click", startTime);
 
-
 function startTime(){
-  inputFild.setAttribute("disabled", "")
-  btn.setAttribute("disabled", "")
-  if(begin)return
-  begin = true
-  let userSelectedDate = calendar.selectedDates[0]
-  console.log(userSelectedDate)
+  inputFild.disabled = true
+  btn.disabled = true
   intervalNumb = setInterval(() =>
   {const diff = userSelectedDate - Date.now();
     if (diff < 1000) stopTimer();
